@@ -8,7 +8,7 @@ import os
 
 load_dotenv(override=True)
 
-MODEL_NAME = "gpt-5.4-mini"
+MODEL_NAME = "gpt-6-luna"
 
 openai = OpenAI()
 
