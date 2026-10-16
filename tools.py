@@ -40,7 +40,7 @@ def send_email(body_text):
     message.attach(MIMEText(f"Your resume bot sent an email with this text:\n\n{body_text}", "plain"))
     
     try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15) as server:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=6) as server:
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASSWORD)
             server.sendmail(EMAIL_USER, MY_EMAIL, message.as_string())
