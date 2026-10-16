@@ -4,6 +4,7 @@ from tools import tools, handle_tool_calls
 from styles import CSS, JS, EXAMPLES
 from dotenv import load_dotenv
 import gradio as gr
+import os
 
 load_dotenv(override=True)
 
@@ -13,6 +14,7 @@ openai = OpenAI()
 
 system = [{"role": "system", "content": TWIN_SYSTEM_PROMPT}]
 
+port = os.getenv("PORT")
 
 def chat(message, history):
     messages = system + history + [{"role": "user", "content": message}]
@@ -37,4 +39,4 @@ if __name__ == "__main__":
         )
         # A load event runs the page script reliably once the app has rendered
         demo.load(None, None, None, js=JS)
-    demo.launch(server_name="0.0.0.0", server_port=7860, css=CSS, theme=gr.themes.Base())
+    demo.launch(server_name="0.0.0.0", server_port=port, css=CSS, theme=gr.themes.Base())
