@@ -230,6 +230,10 @@ button, input, textarea,
   color: var(--twin-gold) !important;
   text-decoration: underline;
 }
+.chatbot .message-row.user-row a,
+.chatbot .message-row[data-role="user"] a {
+    color: #00FFFF !important;
+}
 
 /* ---------- Input row alignment ---------- */
 .input-row,
