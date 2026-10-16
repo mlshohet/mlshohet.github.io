@@ -5,17 +5,18 @@
 	</head>
 	<body>
 		<gradio-lite>
+import gradio as gr
+from transformers_js_py import pipeline
+
+pipe = await pipeline('sentiment-analysis')
+
+demo = gr.Interface.from_pipeline(pipe)
+
+demo.launch()
+
 			<gradio-requirements>
-				huggingface-hub==0.34.4
+transformers-js-py
 			</gradio-requirements>
-			<gradio-file name="app.py" entrypoint>
-				import gradio as gr
-
-				def greet(name):
-					return "Hello, " + name + "!"
-
-				gr.Interface(greet, "textbox", "textbox").launch()
-			</gradio-file>
 		</gradio-lite>
 	</body>
 </html>
