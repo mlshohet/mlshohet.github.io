@@ -30,7 +30,7 @@ def send_email(body_text):
     ]
     if missing_config:
         error=f"Missing email configuration: {', '.join(missing_config)}"
-        logger.error(error)
+        print(error, flush=True)
         return {"success": False, "error": error}
 
     message = MIMEMultipart()
@@ -45,7 +45,7 @@ def send_email(body_text):
             server.login(EMAIL_USER, EMAIL_PASSWORD)
             server.sendmail(EMAIL_USER, MY_EMAIL, message.as_string())
     except (OSError, smtplib.SMTPException) as exc:
-        logger.exception("Gmail SMTP email delivery failed")
+        print(f"Gmail SMTP email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
 
     return  {"success": False, "error": str(exc)}
