@@ -5,12 +5,17 @@
 	</head>
 	<body>
 		<gradio-lite>
-		import gradio as gr
+			<gradio-requirements>
+				huggingface-hub==0.34.4
+			</gradio-requirements>
+			<gradio-file name="app.py" entrypoint>
+				import gradio as gr
 
-		def greet(name):
-			return "Hello, " + name + "!"
+				def greet(name):
+					return "Hello, " + name + "!"
 
-		gr.Interface(greet, "textbox", "textbox").launch()
+				gr.Interface(greet, "textbox", "textbox").launch()
+			</gradio-file>
 		</gradio-lite>
 	</body>
 </html>
