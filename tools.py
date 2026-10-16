@@ -6,13 +6,12 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 from pathlib import Path
 
-load_dotenv(override=True)
+load_dotenv()
 
 def record_user_details(email="(email not provided)", name="(name not provided)", phone="(phone not provided)", notes="(not provided)"):
     send_email(f"A user with name {name}, email {email}, phone {phone} chatted with me. These are the chat notes: {notes}")
     return "OK"
 
-address = os.getenv("EMAIL_ADDRESS")
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
 MY_EMAIL = os.getenv("MY_EMAIL")
@@ -20,22 +19,36 @@ EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
 
 def send_email(body_text):
-    try:
-        message = MIMEMultipart()
-        message["From"] = EMAIL_USER
-        message["To"] = MY_EMAIL
-        message["Subject"] = "From resume bot"
+    missing_config = [
+        name
+        for name, value in (
+            ("MY_EMAIL", MY_EMAIL),
+            ("EMAIL_USER", EMAIL_USER),
+            ("EMAIL_PASSWORD", EMAIL_PASSWORD),
+        )
+        if not value
+    ]
+    if missing_config:
+        error=f"Missing email configuration: {', '.join(missing_config)}"
+        logger.error(error)
+        return {"success": False, "error": error}
 
-        message.attach(MIMEText(f"Your resume bot sent an email with this text:\n\n{body_text}", "plain"))
-        
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+    message = MIMEMultipart()
+    message["From"] = EMAIL_USER
+    message["To"] = MY_EMAIL
+    message["Subject"] = "From resume bot"
+    message.attach(MIMEText(f"Your resume bot sent an email with this text:\n\n{body_text}", "plain"))
+    
+    try:
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=15) as server:
             server.starttls()
             server.login(EMAIL_USER, EMAIL_PASSWORD)
             server.sendmail(EMAIL_USER, MY_EMAIL, message.as_string())
+    except (OSError, smtplib.SMTPException) as exc:
+        logger.exception("Gmail SMTP email delivery failed")
+        return {"success": False, "error": str(exc)}
 
-    except:
-       return "OK"
-
+    return  {"success": False, "error": str(exc)}
 
 record_user_details_json = {
     "name": "record_user_details",
