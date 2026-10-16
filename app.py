@@ -25,7 +25,7 @@ def chat(message, history):
         results = handle_tool_calls(tool_calls)
         messages.append(message)
         messages.extend(results)
-        response = openai.chat.completions.create(model=MODEL_NAME, messages=messages, tools=tools)
+        response = openai.chat.completions.create(model=MODEL_NAME, messages=messages, tools=tools, reasoning_effort="none")
     return response.choices[0].message.content
 
 
