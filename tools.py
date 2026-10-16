@@ -13,7 +13,7 @@ def record_user_details(email="(email not provided)", name="(name not provided)"
     return "OK"
 
 SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 465
+SMTP_PORT = 587
 MY_EMAIL = os.getenv("MY_EMAIL")
 EMAIL_USER = os.getenv("EMAIL_USER")
 EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
