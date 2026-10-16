@@ -18,7 +18,7 @@ port = os.getenv("PORT")
 
 def chat(message, history):
     messages = system + history + [{"role": "user", "content": message}]
-    response = openai.chat.completions.create(model=MODEL_NAME, messages=messages, tools=tools)
+    response = openai.chat.completions.create(model=MODEL_NAME, messages=messages, tools=tools, reasoning_effort="none")
     while response.choices[0].finish_reason == "tool_calls":
         message = response.choices[0].message
         tool_calls = message.tool_calls
