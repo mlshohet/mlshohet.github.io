@@ -37,4 +37,4 @@ if __name__ == "__main__":
         )
         # A load event runs the page script reliably once the app has rendered
         demo.load(None, None, None, js=JS)
-    demo.launch(css=CSS, theme=gr.themes.Base())
+    demo.launch(server_name="0.0.0.0", server_port=7860, css=CSS, theme=gr.themes.Base())
