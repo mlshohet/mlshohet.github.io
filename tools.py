@@ -16,16 +16,20 @@ def record_user_details(email="(not provided)", name="(not provided)", phone="(n
     return "OK"
 
 def send_email(body_text):
+	mail_data = {
+    	"from": from_address,
+		"to": to_address,
+  		"subject": "Message from your chatbot",
+  		"text": body_text
+	}
+
+	mail_data_json = json.dumps(mail_data)
+	
     try:
        return requests.post(
   		mail_url,
   		auth=("api", os.getenv("MAILGUN_API_KEY")),
-  		data={
-            "from": from_address,
-			"to": to_address,
-  			"subject": "Message from your chatbot",
-  			"text": body_text
-        }
+  		data=mail_data_json
     )
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
