@@ -22,12 +22,12 @@ def send_email(body_text):
   		auth=("api", os.getenv("MAILGUN_API_KEY")),
   		data={
             "from": from_address,
-			"to": to_address,
+			"to": os.getenv("MY_EMAIL"),
   			"subject": "Message from your chatbot",
   			"text": body_text
         }
     )
-    except as exc:
+    except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
 
