@@ -31,8 +31,12 @@ def send_email(body_text):
         return requests.post(
 			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
 			auth=("api", os.getenv("MAILGUN_API_KEY")),
-			data=mail_data_json
-		)
+			data={
+                "from": "Your chatbot <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
+                "to": "Mike <mlshohet@gmail.com>",
+                "subject": "Message from your chatbot",
+                "text": "This will go through!!!"
+                })
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
