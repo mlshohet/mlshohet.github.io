@@ -9,7 +9,7 @@ mail_sandbox = os.getenv("MAILGUN_SANDBOX")
 mail_url = f"https://api.mailgun.net/v3/{mail_sandbox}/messages"
 
 from_address = f"Your chatbot <postmaster@{mail_sandbox}>"
-to_address = f"Mike <{os.getenv('MY_EMAIL')}>"
+to_address = os.getenv("MY_EMAIL")
 
 def record_user_details(email="(not provided)", name="(not provided)", phone="(not provided)", notes="(not provided)"):
     send_email(f"{name} with email {email} and phone {phone} chatted with me. These are the chat notes: {notes}")
