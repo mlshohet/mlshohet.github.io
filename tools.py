@@ -32,7 +32,6 @@ def send_email(body_text):
 			"to": "Spinning Sardines <mlshohet@gmail.com>",
   			"subject": "Hello Spinning Sardines",
   			"text": "Congratulations Spinning Sardines, you just sent an email with Mailgun! You are truly awesome!"},
-			headers = {"Content-Type": "application/json"}
 		)
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
