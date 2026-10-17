@@ -11,4 +11,4 @@ jobs:
     steps:
       - name: Send Ping Request
         run: |
-          curl -f -s https://mlshohet.github.io || echo "Ping failed but workflow completed"
+          curl -f -s https://my-site-8fck.onrender.com/ || echo "Ping failed but workflow completed"
