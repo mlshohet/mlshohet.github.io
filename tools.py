@@ -1,58 +1,39 @@
 import json
 import os
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+import requests
 from dotenv import load_dotenv
-from pathlib import Path
 
 load_dotenv()
 
-def record_user_details(email="(email not provided)", name="(name not provided)", phone="(phone not provided)", notes="(not provided)"):
+mail_sandbox = os.getenv("MAILGUN_SANDBOX")
+mail_url = f"https://api.mailgun.net/v3/{mail_sandbox}/messages"
+
+from_address = f"Your chatbot <postmaster@{mail_sandbox}.mailgun.org>"
+to_address = os.getenv("MY_EMAIL")
+
+def record_user_details(email="(not provided)", name="(not provided)", phone="(not provided)", notes="(not provided)"):
     send_email(f"A user with name {name}, email {email}, phone {phone} chatted with me. These are the chat notes: {notes}")
     return "OK"
 
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = 587
-MY_EMAIL = os.getenv("MY_EMAIL")
-EMAIL_USER = os.getenv("EMAIL_USER")
-EMAIL_PASSWORD = os.getenv("EMAIL_PASSWORD")
-
 def send_email(body_text):
-    missing_config = [
-        name
-        for name, value in (
-            ("MY_EMAIL", MY_EMAIL),
-            ("EMAIL_USER", EMAIL_USER),
-            ("EMAIL_PASSWORD", EMAIL_PASSWORD),
-        )
-        if not value
-    ]
-    if missing_config:
-        error=f"Missing email configuration: {', '.join(missing_config)}"
-        print(error, flush=True)
-        return {"success": False, "error": error}
-
-    message = MIMEMultipart()
-    message["From"] = EMAIL_USER
-    message["To"] = MY_EMAIL
-    message["Subject"] = "From resume bot"
-    message.attach(MIMEText(f"Your resume bot sent an email with this text:\n\n{body_text}", "plain"))
-    
     try:
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT, timeout=6) as server:
-            server.starttls()
-            server.login(EMAIL_USER, EMAIL_PASSWORD)
-            server.sendmail(EMAIL_USER, MY_EMAIL, message.as_string())
-    except (OSError, smtplib.SMTPException) as exc:
-        print(f"Gmail SMTP email delivery failed: {exc!r}", flush=True)
+       return requests.post(
+  		mail_url,
+  		auth=("api", os.getenv("MAILGUN_API_KEY")),
+  		data={
+            "from": from_address,
+			"to": to_address,
+  			"subject": "Message from your chatbot",
+  			"text": body_text
+        }
+    )
+    except as exc:
+        print(f"Email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
-
-    return  {"success": False, "error": str(exc)}
 
 record_user_details_json = {
     "name": "record_user_details",
-    "description": "Use this tool if a user provided an email address or phone",
+    "description": "Use this tool if the user provided an email address or phone",
     "parameters": {
         "type": "object",
         "properties": {
