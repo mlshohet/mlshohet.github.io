@@ -24,7 +24,7 @@ def send_email(body_text):
         
     }
     
-    mail_data_json = json.dumps(mail_data)
+    mail_data_json = json.dumps(mail_data, indent=4)
     print(mail_data_json)
 
     try:
