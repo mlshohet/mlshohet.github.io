@@ -1,16 +1,27 @@
-<html>
-	<head>
-		<script type="module" crossorigin src="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.js"></script>
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@gradio/lite/dist/lite.css" />
-	</head>
-	<body>
-		<gradio-lite>
-		import gradio as gr
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Bot</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
 
-		def greet(name):
-			return "Hello, " + name + "!"
+    <!-- Replace with your actual Render site URL -->
+    <iframe src="https://my-site-8fck.onrender.com/"></iframe>
 
-		gr.Interface(greet, "textbox", "textbox").launch()
-		</gradio-lite>
-	</body>
+</body>
 </html>
