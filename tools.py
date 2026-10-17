@@ -25,6 +25,7 @@ def send_email(body_text):
     }
     
     mail_data_json = json.dumps(mail_data)
+    print(mail_data_json)
     
     try:
        return requests.post(
