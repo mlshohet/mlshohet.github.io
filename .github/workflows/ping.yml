@@ -1,0 +1,14 @@
+name: Ping Application
+
+on:
+  schedule:
+    - cron: '*/14 * * * *'
+  workflow_dispatch: # Manual trigger from Actions
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Ping Request
+        run: |
+          curl -f -s https://mlshohet.github.io || echo "Ping failed but workflow completed"
