@@ -5,25 +5,27 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-mail_sandbox = os.getenv("MAILGUN_SANDBOX")
-mail_url = f"https://api.mailgun.net/v3/{mail_sandbox}/messages"
-
-from_address = f"Your chatbot <postmaster@{mail_sandbox}>"
 
 def record_user_details(email="(not provided)", name="(not provided)", phone="(not provided)", notes="(not provided)"):
     send_email(f"{name} with email {email} and phone {phone} chatted with me. These are the chat notes: {notes}")
     return "OK"
 
 def send_email(body_text):
+    mail_sandbox = os.getenv("MAILGUN_SANDBOX")
+    mail_url = f"https://api.mailgun.net/v3/{mail_sandbox}/messages"
+    from_address = f"Your chatbot <postmaster@{mail_sandbox}>"
+    
     try:
         return requests.post(
-			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
+			mail_url,
   		    auth=("api", os.getenv("MAILGUN_API_KEY")),
 			data={
-			"to": os.getenv("MY_EMAIL"),
-  			"subject": "Message from your chatbot",
-  			"text": body_text},
-		)
+				"from": from_address,
+				"to": os.getenv("MY_EMAIL"),
+  				"subject": "Message from your chatbot",
+  				"text": body_text
+            })
+
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
