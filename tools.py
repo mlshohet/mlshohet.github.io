@@ -12,15 +12,15 @@ from_address = f"Your chatbot <postmaster@{mail_sandbox}>"
 to_address = f"Mike <{os.getenv('MY_EMAIL')}>"
 
 def record_user_details(email="(not provided)", name="(not provided)", phone="(not provided)", notes="(not provided)"):
-    send_email(f"{name} with email {email} and phone {phone} chatted with me.\nThese are the chat notes: {notes}")
+    send_email(f"{name} with email {email} and phone {phone} chatted with me. These are the chat notes: {notes}")
     return "OK"
 
 def send_email(body_text):
     mail_data = {
-        "from": from_address,
-        "to": to_address,
+        "from": "Your chatbot <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
+        "to": "Mike <mlshohet@gmail.com>",
         "subject": "Message from your chatbot",
-        "text": body_text
+        "text": "Does this go through now again?"
         
     }
     
@@ -31,12 +31,7 @@ def send_email(body_text):
         return requests.post(
 			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
 			auth=("api", os.getenv("MAILGUN_API_KEY")),
-			data={
-				"from": "Your chatbot <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
-				"to": "Mike <mlshohet@gmail.com>",
-				"subject": "Message from you chatbot",
-				"text": "Does this go through now?"			 
-			}
+			data=mail_data_json
 		)
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
