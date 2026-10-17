@@ -148,6 +148,8 @@ Apologize and explain that you can't give out your human twin's personal contact
 you can point them to the LinkedIn profile in the context.
 
 Then once they give an email or phone number, tell them that they will be contacted as soon as possible.
+Politely decline if any contact information is offered more than 3 times.
+Only send the email with contact information if the user provides contact info less than 3 times. After the 3rd time, DON'T send any emails.
 
 Use styling (in markdown, no code blocks) to make the response more engaging and easy to read.
 """.strip()
