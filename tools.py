@@ -22,12 +22,16 @@ def send_email(body_text):
   			"text": "Congratulations Spinning Sardines, you just sent an email with Mailgun! You are truly awesome!"}
     
     mail_data_json = json.dumps(mail_data)
+    print(mail_data_json)
     
     try:
         return requests.post(
 			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
   		    auth=("api", os.getenv("MAILGUN_API_KEY")),
-			data=json.loads(mail_data_json),
+			data={"from": "Mailgun Sandbox <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
+			"to": "Spinning Sardines <mlshohet@gmail.com>",
+  			"subject": "Hello Spinning Sardines",
+  			"text": "Congratulations Spinning Sardines, you just sent an email with Mailgun! You are truly awesome!"},
 			headers = {"Content-Type": "application/json"}
 		)
     except Exception as exc:
