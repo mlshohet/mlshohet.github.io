@@ -1,5 +1,4 @@
 from openai import OpenAI
-from context import TWIN_SYSTEM_PROMPT
 from tools import tools, handle_tool_calls
 from styles import CSS, JS, EXAMPLES
 from dotenv import load_dotenv
@@ -12,7 +11,10 @@ MODEL_NAME = "gpt-6-luna"
 
 openai = OpenAI()
 
-system = [{"role": "system", "content": TWIN_SYSTEM_PROMPT}]
+with open("/etc/secrets/context.txt", "r", encoding="utf-8") as file:
+    system_prompt = file.read()
+
+system = [{"role": "system", "content": system_prompt}]
 
 port = os.getenv("PORT")
 
