@@ -29,7 +29,7 @@ def send_email(body_text):
         return requests.post(
 			mail_url,
 			auth=("api", os.getenv("MAILGUN_API_KEY")),
-			data=json.dumps(mail_data),
+			data=json.loads(mail_data_json),
 			headers={"Content-Type": "application/json"}
 		)
     except Exception as exc:
