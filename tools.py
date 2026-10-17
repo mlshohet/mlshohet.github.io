@@ -25,7 +25,6 @@ def send_email(body_text):
   				"subject": "Message from your chatbot",
   				"text": body_text
             })
-
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
