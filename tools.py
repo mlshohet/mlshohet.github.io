@@ -17,16 +17,15 @@ def record_user_details(email="(not provided)", name="(not provided)", phone="(n
 
 def send_email(body_text):
     mail_data = {
-        "from": "Your chatbot <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
-        "to": "Mike <mlshohet@gmail.com>",
+        "from": from_address,
+        "to": to_address,
         "subject": "Message from your chatbot",
-        "text": "Does this go through now again?"
-        
+        "text": body_text
     }
     
     mail_data_json = json.dumps(mail_data)
-	
-	try:
+    
+    try:
         return requests.post(
 			mail_url,
 			auth=("api", os.getenv("MAILGUN_API_KEY")),
