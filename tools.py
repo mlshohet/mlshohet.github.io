@@ -22,10 +22,10 @@ def send_email(body_text):
   		"subject": "Message from your chatbot",
   		"text": body_text
 	}
-
+	
 	mail_data_json = json.dumps(mail_data)
 	
-    try:
+	try:
        return requests.post(
   		mail_url,
   		auth=("api", os.getenv("MAILGUN_API_KEY")),
