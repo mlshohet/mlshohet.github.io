@@ -30,7 +30,8 @@ def send_email(body_text):
 			mail_url,
 			auth=("api", os.getenv("MAILGUN_API_KEY")),
 			data=mail_data_json,
-			headers={"Content-Type": "application/json"}
+			json=mail_data_json,
+			headers={"charset": "utf-8", "Content-Type": "application/json"}
 		)
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
