@@ -25,13 +25,12 @@ def send_email(body_text):
     
     try:
         return requests.post(
-			mail_url,
-			auth=("api", os.getenv("MAILGUN_API_KEY")),
+			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
+  		    auth=("api", os.getenv("MAILGUN_API_KEY")),
 			data={"from": "Mailgun Sandbox <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
 			"to": "Spinning Sardines <mlshohet@gmail.com>",
   			"subject": "Hello Spinning Sardines",
   			"text": "Congratulations Spinning Sardines, you just sent an email with Mailgun! You are truly awesome!"},
-			headers={"Content-Type": "application/json"}
 		)
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
