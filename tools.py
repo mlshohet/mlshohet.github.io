@@ -29,11 +29,10 @@ def send_email(body_text):
 
     try:
         return requests.post(
-			mail_url,
+			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
 			auth=("api", os.getenv("MAILGUN_API_KEY")),
 			data=mail_data_json
-							 
-							)
+		)
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
         return {"success": False, "error": str(exc)}
