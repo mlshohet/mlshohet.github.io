@@ -9,7 +9,6 @@ mail_sandbox = os.getenv("MAILGUN_SANDBOX")
 mail_url = f"https://api.mailgun.net/v3/{mail_sandbox}/messages"
 
 from_address = f"Your chatbot <postmaster@{mail_sandbox}>"
-to_address = os.getenv("MY_EMAIL")
 
 def record_user_details(email="(not provided)", name="(not provided)", phone="(not provided)", notes="(not provided)"):
     send_email(f"{name} with email {email} and phone {phone} chatted with me. These are the chat notes: {notes}")
@@ -31,7 +30,7 @@ def send_email(body_text):
 			data={"from": "Mailgun Sandbox <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
 			"to": os.getenv("MY_EMAIL"),
   			"subject": "Message from your chatbot",
-  			"text": json.dumps(body_text)},
+  			"text": body_text},
 		)
     except Exception as exc:
         print(f"Email delivery failed: {exc!r}", flush=True)
