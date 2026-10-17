@@ -29,8 +29,8 @@ def send_email(body_text):
 			"https://api.mailgun.net/v3/sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org/messages",
   		    auth=("api", os.getenv("MAILGUN_API_KEY")),
 			data={"from": "Mailgun Sandbox <postmaster@sandboxd4e840b36a3a4f82a03c809d315b06a9.mailgun.org>",
-			"to": "Spinning Sardines <mlshohet@gmail.com>",
-  			"subject": "Hello Spinning Sardines",
+			"to": json.dumps(to_address),
+  			"subject": "Message from your chatbot",
   			"text": json.dumps(body_text)},
 		)
     except Exception as exc:
